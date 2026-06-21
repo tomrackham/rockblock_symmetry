@@ -671,6 +671,11 @@ kbd {
 
 /* Mobile Responsiveness */
 @media (max-width: 900px) {
+    body {
+        overflow: auto;
+        height: auto;
+        padding: 20px 0;
+    }
     .app-container {
         display: flex;
         flex-direction: column;
