@@ -79,7 +79,9 @@ body {
 .app-container {
     display: grid;
     grid-template-columns: 380px 1fr;
-    gap: 24px;
+    grid-template-rows: auto 1fr;
+    column-gap: 24px;
+    row-gap: 8px;
     width: 95vw;
     max-width: 1100px;
     height: 90vh;
@@ -89,12 +91,23 @@ body {
 
 /* Sidebar Styling */
 .sidebar {
+    grid-column: 1;
+    grid-row: 2;
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 30px;
     height: 100%;
     overflow-y: auto;
+}
+
+.brand {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .brand h2 {
@@ -168,7 +181,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
-    width: 66%;
+    width: 82%;
 }
 
 .btn-level {
@@ -320,6 +333,8 @@ body {
 
 /* Main Viewport & Board Container */
 .game-viewport {
+    grid-column: 2;
+    grid-row: 1 / span 2;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -657,7 +672,8 @@ kbd {
 /* Mobile Responsiveness */
 @media (max-width: 900px) {
     .app-container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         height: auto;
         max-height: none;
         padding-bottom: 40px;

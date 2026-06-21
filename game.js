@@ -241,16 +241,22 @@ class Game {
 
     document.addEventListener('keydown', (e) => {
       // Konami code check
-      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      const key = e.key.toLowerCase();
+
       if (key === this.konamiCode[this.konamiIndex].toLowerCase()) {
         this.konamiIndex++;
+        
         if (this.konamiIndex === this.konamiCode.length) {
           this.showRockParity = !this.showRockParity;
           this.render();
           this.konamiIndex = 0;
         }
       } else {
-        this.konamiIndex = 0;
+        if (key === this.konamiCode[0].toLowerCase()) {
+          this.konamiIndex = 1;
+        } else {
+          this.konamiIndex = 0;
+        }
       }
 
       if (this.isCompleted) return;

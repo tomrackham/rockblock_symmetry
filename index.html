@@ -18,13 +18,44 @@
 
     <!-- Main Application Shell -->
     <div class="app-container">
+        <!-- Title Block -->
+        <div class="brand glass-panel">
+            <h2>ROCKBLOCK</h2>
+            <div class="brand-sub">SYMMETRY</div>
+        </div>
+
+        <!-- Main Viewport -->
+        <main class="game-viewport">
+            <div class="game-board-container">
+                <!-- Victory Screen Overlay -->
+                <div id="victory-screen" class="overlay">
+                    <div class="glass-panel victory-card">
+                        <div class="victory-icon">★</div>
+                        <h2>LEVEL CLEARED!</h2>
+                        <p>All blocks converted. Symmetry achieved.</p>
+                        <div class="victory-actions">
+                            <button id="next-level-btn" class="btn btn-primary">NEXT LEVEL</button>
+                            <button id="close-btn" class="btn btn-secondary">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Symmetry Axes Lines Overlay -->
+                <div class="symmetry-lines" id="symmetry-lines">
+                    <div class="line horizontal"></div>
+                    <div class="line vertical"></div>
+                    <div class="line diagonal-main"></div>
+                    <div class="line diagonal-anti"></div>
+                </div>
+
+                <!-- 13x13 Game Grid -->
+                <div class="game-board" id="game-board">
+                    <!-- DOM elements representing grid cells, players, rocks, walls will be placed here -->
+                </div>
+            </div>
+        </main>
+
         <!-- Sidebar Controls -->
         <aside class="sidebar glass-panel">
-            <div class="brand">
-                <h2>ROCKBLOCK</h2>
-                <div class="brand-sub">SYMMETRY</div>
-            </div>
-
             <div class="instructions-brief" style="font-size: 0.8rem; color: #ccd; line-height: 1.4; margin-bottom: 0;">
                 <p style="margin-bottom: 12px;">Push all the rocks until they convert to walls.</p>
                 <p>The final pattern of walls must be symmetric across all four axes.</p>
@@ -104,38 +135,6 @@
                 Updated to HTML5, June 2026
             </div>
         </aside>
-
-        <!-- Main Viewport -->
-        <main class="game-viewport">
-            <div class="game-board-container">
-                <!-- Victory Screen Overlay -->
-                <div id="victory-screen" class="overlay">
-                    <div class="glass-panel victory-card">
-                        <div class="victory-icon">★</div>
-                        <h2>LEVEL CLEARED!</h2>
-                        <p>All blocks converted. Symmetry achieved.</p>
-                        <div class="victory-actions">
-                            <button id="next-level-btn" class="btn btn-primary">NEXT LEVEL</button>
-                            <button id="close-btn" class="btn btn-secondary">CLOSE</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Symmetry Axes Lines Overlay -->
-                <div class="symmetry-lines" id="symmetry-lines">
-                    <div class="line horizontal"></div>
-                    <div class="line vertical"></div>
-                    <div class="line diagonal-main"></div>
-                    <div class="line diagonal-anti"></div>
-                </div>
-
-                <!-- 13x13 Game Grid -->
-                <div class="game-board" id="game-board">
-                    <!-- DOM elements representing grid cells, players, rocks, walls will be placed here -->
-                </div>
-            </div>
-
-
-        </main>
     </div>
 
     <script src="game.js"></script>
