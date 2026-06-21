@@ -272,6 +272,7 @@ body {
 .actions-section {
     display: flex;
     gap: 12px;
+    margin-top: -30px; /* Offset sidebar's 30px gap so spacing from the last toggle (which has margin-bottom 12px) is exactly 12px */
 }
 
 .btn {

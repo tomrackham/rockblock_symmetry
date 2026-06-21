@@ -191,7 +191,6 @@ class Game {
     // Settings toggles
     this.guideToggle = document.getElementById('symmetry-guide-toggle');
     this.shadowToggle = document.getElementById('shadow-blocks-toggle');
-    this.parityToggle = document.getElementById('rock-parity-toggle');
     
     // Action buttons
     this.undoBtn = document.getElementById('undo-btn');
@@ -236,13 +235,31 @@ class Game {
   }
 
   initEventListeners() {
-    // Keyboard inputs
+    // Input handling
+    this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    this.konamiIndex = 0;
+
     document.addEventListener('keydown', (e) => {
-      const key = e.key.toUpperCase();
+      // Konami code check
+      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (key === this.konamiCode[this.konamiIndex].toLowerCase()) {
+        this.konamiIndex++;
+        if (this.konamiIndex === this.konamiCode.length) {
+          this.showRockParity = !this.showRockParity;
+          this.render();
+          this.konamiIndex = 0;
+        }
+      } else {
+        this.konamiIndex = 0;
+      }
+
+      if (this.isCompleted) return;
+
+      const keyUpper = e.key.toUpperCase();
       
       // Level selection A-J
-      if (key.length === 1 && key >= 'A' && key <= 'J') {
-        const idx = key.charCodeAt(0) - 'A'.charCodeAt(0);
+      if (keyUpper.length === 1 && keyUpper >= 'A' && keyUpper <= 'J') {
+        const idx = keyUpper.charCodeAt(0) - 'A'.charCodeAt(0);
         if (idx < LEVELS.length) {
           this.loadLevel(idx);
           e.preventDefault();
@@ -301,12 +318,6 @@ class Game {
 
     this.shadowToggle.addEventListener('change', (e) => {
       this.showShadowBlocks = e.target.checked;
-      this.render();
-      if (e.target) e.target.blur();
-    });
-
-    this.parityToggle.addEventListener('change', (e) => {
-      this.showRockParity = e.target.checked;
       this.render();
       if (e.target) e.target.blur();
     });
