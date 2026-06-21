@@ -14,7 +14,7 @@
     --neon-red: #ff073a;
     --neon-player: #00ffaa;
     
-    --board-size: 520px;
+    --board-size: min(95vw, 520px);
     --cell-size: calc(var(--board-size) / 13);
 }
 
@@ -168,6 +168,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
+    width: 66%;
 }
 
 .btn-level {
@@ -651,4 +652,27 @@ kbd {
     top: 50%; left: 50%;
     width: 141.4%; height: 2px;
     transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .app-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        max-height: none;
+        padding-bottom: 40px;
+    }
+    .level-grid {
+        width: 100%;
+    }
+    .sidebar {
+        height: auto;
+        overflow-y: visible;
+        width: 100%;
+    }
+    .game-board-container {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

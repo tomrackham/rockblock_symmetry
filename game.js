@@ -322,6 +322,40 @@ class Game {
       if (e.target) e.target.blur();
     });
 
+    // Touch controls for swipe
+    let touchStartX = 0;
+    let touchStartY = 0;
+    
+    this.boardEl.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, {passive: false});
+
+    this.boardEl.addEventListener('touchmove', (e) => {
+      e.preventDefault(); // Prevent page scrolling while swiping
+    }, {passive: false});
+
+    this.boardEl.addEventListener('touchend', (e) => {
+      if (this.isCompleted) return;
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+      
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+      
+      if (Math.max(absDx, absDy) > 30) {
+        if (absDx > absDy) {
+          if (dx > 0) this.movePlayer(0, 1);
+          else this.movePlayer(0, -1);
+        } else {
+          if (dy > 0) this.movePlayer(1, 0);
+          else this.movePlayer(-1, 0);
+        }
+      }
+    });
+
     // Actions clicks
     this.undoBtn.addEventListener('click', (e) => {
       this.undo();
