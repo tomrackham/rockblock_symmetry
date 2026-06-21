@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RockBlock Symmetry</title>
+    <!-- Google Fonts for premium retro-modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background grid decoration -->
+    <div class="stars-bg"></div>
+    <div class="grid-overlay"></div>
+
+
+    <!-- Main Application Shell -->
+    <div class="app-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar glass-panel">
+            <div class="brand">
+                <h2>ROCKBLOCK</h2>
+                <div class="brand-sub">SYMMETRY</div>
+            </div>
+
+            <div class="instructions-brief" style="font-size: 0.8rem; color: #ccd; line-height: 1.4; margin-bottom: 0;">
+                <p style="margin-bottom: 12px;">Push all the rocks until they convert to walls.</p>
+                <p>The final pattern of walls must be symmetric across all four axes.</p>
+            </div>
+
+            <!-- Level Selector Grid -->
+            <div class="level-selector-section">
+                <h3>Select Level</h3>
+                <div class="level-grid" id="level-grid">
+                    <!-- Buttons A to O dynamically populated -->
+                </div>
+            </div>
+
+            <!-- How to Play Section -->
+            <div class="instructions-section">
+                <h3>How To Play</h3>
+                <div class="step-desc" style="font-size: 0.85rem; color: #fff; margin-bottom: 12px;">Push rocks to advance colour towards solid wall:</div>
+                <div class="rock-progression">
+                    <span class="chip rock-purple" title="Purple (Needs 5 Pushes)">Purple</span>
+                    <span class="arrow">→</span>
+                    <span class="chip rock-blue" title="Blue (Needs 4 Pushes)">Blue</span>
+                    <span class="arrow">→</span>
+                    <span class="chip rock-green" title="Green (Needs 3 Pushes)">Green</span>
+                    <span class="arrow">→</span>
+                    <span class="chip rock-yellow" title="Yellow (Needs 2 Pushes)">Yellow</span>
+                    <span class="arrow">→</span>
+                    <span class="chip rock-red" title="Red (Needs 1 Push)">Red</span>
+                    <span class="arrow">→</span>
+                    <span class="chip wall-cell" title="Symmetric Solid Wall">Wall</span>
+                </div>
+                <div class="controls-guide" style="align-items: flex-start; margin-top: 16px; gap: 8px;">
+                    <div class="keys">
+                        <kbd>▲</kbd><kbd>▼</kbd><kbd>◄</kbd><kbd>►</kbd> Arrow Keys to Move
+                    </div>
+                    <div class="keys">
+                        <kbd>Backspace</kbd> Undo
+                    </div>
+                    <div class="keys">
+                        <kbd>Esc</kbd> Restart
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings & Controls -->
+            <div class="settings-section">
+                <h3>Options</h3>
+                <div class="control-row">
+                    <label for="symmetry-guide-toggle">Lines of symmetry</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="symmetry-guide-toggle">
+                        <label for="symmetry-guide-toggle"></label>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <label for="shadow-blocks-toggle">Shadow blocks</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="shadow-blocks-toggle">
+                        <label for="shadow-blocks-toggle"></label>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <label for="rock-parity-toggle">Parity indicators</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="rock-parity-toggle">
+                        <label for="rock-parity-toggle"></label>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="actions-section">
+                <button id="undo-btn" class="btn btn-secondary" title="Undo Last Push (Backspace)">
+                    <span class="icon">⤶</span> Undo
+                </button>
+                <button id="restart-btn" class="btn btn-secondary" title="Restart Level (Esc)">
+                    <span class="icon">↻</span> Restart
+                </button>
+            </div>
+
+            <div class="credit" style="font-size: 0.75rem; color: var(--text-muted); text-align: center; padding-top: 8px; padding-bottom: 20px; line-height: 1.4;">
+                By Tom Rackham, April 2000<br>
+                Updated to HTML5, June 2026
+            </div>
+        </aside>
+
+        <!-- Main Viewport -->
+        <main class="game-viewport">
+            <div class="game-board-container">
+                <!-- Victory Screen Overlay -->
+                <div id="victory-screen" class="overlay">
+                    <div class="glass-panel victory-card">
+                        <div class="victory-icon">★</div>
+                        <h2>LEVEL CLEARED!</h2>
+                        <p>All blocks converted. Symmetry achieved.</p>
+                        <div class="victory-actions">
+                            <button id="next-level-btn" class="btn btn-primary">NEXT LEVEL</button>
+                            <button id="close-btn" class="btn btn-secondary">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Symmetry Axes Lines Overlay -->
+                <div class="symmetry-lines" id="symmetry-lines">
+                    <div class="line horizontal"></div>
+                    <div class="line vertical"></div>
+                    <div class="line diagonal-main"></div>
+                    <div class="line diagonal-anti"></div>
+                </div>
+
+                <!-- 13x13 Game Grid -->
+                <div class="game-board" id="game-board">
+                    <!-- DOM elements representing grid cells, players, rocks, walls will be placed here -->
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
