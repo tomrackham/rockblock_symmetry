@@ -66,10 +66,10 @@
                             <kbd>▲</kbd><kbd>▼</kbd><kbd>◄</kbd><kbd>►</kbd> Arrow Keys or Swipe to Move
                         </div>
                         <div class="keys">
-                            <kbd>Backspace</kbd> Undo
+                            <kbd>Z</kbd> or <kbd>Backspace</kbd> Undo
                         </div>
                         <div class="keys">
-                            <kbd>Esc</kbd> Restart
+                            <kbd>R</kbd> or <kbd>Esc</kbd> Restart
                         </div>
                     </div>
                 </div>
@@ -125,10 +125,10 @@
             <aside class="sidebar glass-panel">
                 <!-- Quick Action Buttons -->
                 <div class="actions-section" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-                    <button id="undo-btn" class="btn btn-secondary" title="Undo Last Push (Backspace)">
+                    <button id="undo-btn" class="btn btn-secondary" title="Undo Last Push (Z or Backspace)">
                         <span class="icon">⤶</span> Undo
                     </button>
-                    <button id="restart-btn" class="btn btn-secondary" title="Restart Level (Esc)">
+                    <button id="restart-btn" class="btn btn-secondary" title="Restart Level (R or Esc)">
                         <span class="icon">↻</span> Restart
                     </button>
                     <button id="menu-btn" class="btn btn-secondary" title="Back to Menu">
@@ -151,6 +151,13 @@
                         <div class="toggle-switch">
                             <input type="checkbox" id="shadow-blocks-toggle">
                             <label for="shadow-blocks-toggle"></label>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <label for="rock-numbers-toggle">Show numbers on rocks</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="rock-numbers-toggle">
+                            <label for="rock-numbers-toggle"></label>
                         </div>
                     </div>
                 </div>

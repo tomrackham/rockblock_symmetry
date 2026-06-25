@@ -142,7 +142,7 @@ body {
 }
 
 #game-view .sidebar {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .brand h2 {
@@ -428,27 +428,31 @@ body {
     transition: transform 0.1s ease; /* Fast smooth movement */
 }
 
-/* Rock Parity Indicators (Central Dots) */
-.parity-white::after, .parity-black::after {
-    content: '';
+/* Rock Parity Indicators (Now integrated into Numbers) */
+
+.rock-number {
     position: absolute;
-    width: 40%;
-    height: 40%;
-    border-radius: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 5;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: white;
+    text-shadow: 0 0 2px black, 0 0 4px black, 0 0 6px black;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.parity-white::after {
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 60%, rgba(255, 255, 255, 0) 100%);
+.num-parity-white {
+    color: white;
+    text-shadow: 0 0 2px black, 0 0 4px black, 0 0 6px black, 0 0 8px rgba(0,0,0,0.8);
 }
 
-.parity-black::after {
-    background: radial-gradient(circle at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
+.num-parity-black {
+    color: black;
+    text-shadow: 0 0 2px white, 0 0 4px white, 0 0 6px white, 0 0 8px rgba(255,255,255,0.8);
 }
-
 
 /* Player Sprite */
 .entity-player {

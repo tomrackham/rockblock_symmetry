@@ -177,7 +177,7 @@ class Game {
     // Preferences
     this.showSymmetryGuide = false;
     this.showShadowBlocks = false;
-    this.showRockParity = false;
+    this.showRockNumbers = false;
     this.completedLevels = JSON.parse(localStorage.getItem('rockblock_completed') || '[]');
     
     // DOM Elements
@@ -196,6 +196,7 @@ class Game {
     // Settings toggles
     this.guideToggle = document.getElementById('symmetry-guide-toggle');
     this.shadowToggle = document.getElementById('shadow-blocks-toggle');
+    this.numbersToggle = document.getElementById('rock-numbers-toggle');
     
     // Action buttons
     this.undoBtn = document.getElementById('undo-btn');
@@ -255,29 +256,7 @@ class Game {
     });
 
     // Input handling
-    this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    this.konamiIndex = 0;
-
     document.addEventListener('keydown', (e) => {
-      // Konami code check
-      const key = e.key.toLowerCase();
-
-      if (key === this.konamiCode[this.konamiIndex].toLowerCase()) {
-        this.konamiIndex++;
-        
-        if (this.konamiIndex === this.konamiCode.length) {
-          this.konamiIndex = 0;
-          this.showRockParity = !this.showRockParity;
-          this.render();
-        }
-      } else {
-        if (key === this.konamiCode[0].toLowerCase()) {
-          this.konamiIndex = 1;
-        } else {
-          this.konamiIndex = 0;
-        }
-      }
-
       if (this.isCompleted) return;
 
       const keyUpper = e.key.toUpperCase();
@@ -318,10 +297,14 @@ class Game {
           this.movePlayer(0, 1);
           e.preventDefault();
           break;
+        case 'z':
+        case 'Z':
         case 'Backspace':
           this.undo();
           e.preventDefault();
           break;
+        case 'r':
+        case 'R':
         case 'Escape':
           this.restartLevel();
           e.preventDefault();
@@ -352,6 +335,12 @@ class Game {
 
     this.shadowToggle.addEventListener('change', (e) => {
       this.showShadowBlocks = e.target.checked;
+      this.render();
+      if (e.target) e.target.blur();
+    });
+
+    this.numbersToggle.addEventListener('change', (e) => {
+      this.showRockNumbers = e.target.checked;
       this.render();
       if (e.target) e.target.blur();
     });
@@ -751,9 +740,15 @@ class Game {
           el.className = `entity rock-${colorClass}`;
           el.style.transform = `translate(calc(${c} * 100%), calc(${r} * 100%))`;
           
-          if (this.showRockParity) {
+          if (this.showRockNumbers) {
+             const numEl = document.createElement('div');
+             numEl.className = 'rock-number';
+             numEl.textContent = 9 - val;
+             
              const finalParity = (r + c + (9 - val)) % 2;
-             el.classList.add(finalParity === 0 ? 'parity-white' : 'parity-black');
+             numEl.classList.add(finalParity === 0 ? 'num-parity-white' : 'num-parity-black');
+             
+             el.appendChild(numEl);
           }
           
           this.boardEl.appendChild(el);
