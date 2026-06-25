@@ -167,6 +167,7 @@ class Game {
   constructor() {
     this.levelStates = {};
     this.levelIndex = null;
+    this.selectedLevelIndex = 0;
     this.grid = []; // 13x13 grid: 0 (empty), 2 (wall), 4..8 (rocks)
     this.player = { r: 0, c: 0 };
     this.pushes = 0;
@@ -180,6 +181,10 @@ class Game {
     this.completedLevels = JSON.parse(localStorage.getItem('rockblock_completed') || '[]');
     
     // DOM Elements
+    this.menuViewEl = document.getElementById('menu-view');
+    this.gameViewEl = document.getElementById('game-view');
+    this.startBtn = document.getElementById('start-btn');
+    this.menuBtn = document.getElementById('menu-btn');
     this.boardEl = document.getElementById('game-board');
     this.levelGridEl = document.getElementById('level-grid');
     this.levelValEl = document.getElementById('level-val');
@@ -205,9 +210,7 @@ class Game {
     // Bind Event Listeners
     this.initEventListeners();
     this.buildLevelSelector();
-    
-    // Start game immediately
-    this.loadLevel(0);
+    this.updateLevelSelectorUI();
   }
 
   buildLevelSelector() {
@@ -215,11 +218,12 @@ class Game {
     LEVELS.forEach((level, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-level';
-      if (idx === this.levelIndex) btn.classList.add('active');
+      if (idx === this.selectedLevelIndex) btn.classList.add('active');
       if (this.completedLevels.includes(level.name)) btn.classList.add('completed');
       btn.textContent = level.name;
       btn.addEventListener('click', (e) => {
-        this.loadLevel(idx);
+        this.selectedLevelIndex = idx;
+        this.updateLevelSelectorUI();
         if (e.target) e.target.blur();
       });
       this.levelGridEl.appendChild(btn);
@@ -229,12 +233,27 @@ class Game {
   updateLevelSelectorUI() {
     const buttons = this.levelGridEl.querySelectorAll('.btn-level');
     buttons.forEach((btn, idx) => {
-      btn.classList.toggle('active', idx === this.levelIndex);
+      btn.classList.toggle('active', idx === this.selectedLevelIndex);
       btn.classList.toggle('completed', this.completedLevels.includes(LEVELS[idx].name));
     });
   }
 
   initEventListeners() {
+    this.startBtn.addEventListener('click', (e) => {
+      this.menuViewEl.classList.remove('active');
+      this.gameViewEl.classList.add('active');
+      if (this.levelIndex !== this.selectedLevelIndex) {
+        this.loadLevel(this.selectedLevelIndex);
+      }
+      if (e.target) e.target.blur();
+    });
+
+    this.menuBtn.addEventListener('click', (e) => {
+      this.gameViewEl.classList.remove('active');
+      this.menuViewEl.classList.add('active');
+      if (e.target) e.target.blur();
+    });
+
     // Input handling
     this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     this.konamiIndex = 0;
@@ -247,9 +266,9 @@ class Game {
         this.konamiIndex++;
         
         if (this.konamiIndex === this.konamiCode.length) {
+          this.konamiIndex = 0;
           this.showRockParity = !this.showRockParity;
           this.render();
-          this.konamiIndex = 0;
         }
       } else {
         if (key === this.konamiCode[0].toLowerCase()) {
@@ -267,11 +286,20 @@ class Game {
       if (keyUpper.length === 1 && keyUpper >= 'A' && keyUpper <= 'J') {
         const idx = keyUpper.charCodeAt(0) - 'A'.charCodeAt(0);
         if (idx < LEVELS.length) {
-          this.loadLevel(idx);
+          if (this.menuViewEl.classList.contains('active')) {
+            this.selectedLevelIndex = idx;
+            this.updateLevelSelectorUI();
+          } else {
+            this.selectedLevelIndex = idx;
+            this.loadLevel(idx);
+          }
           e.preventDefault();
         }
         return;
       }
+
+      // Prevent game actions if not in game view
+      if (!this.gameViewEl.classList.contains('active')) return;
 
       switch (e.key) {
         case 'ArrowUp':
@@ -332,17 +360,24 @@ class Game {
     let touchStartX = 0;
     let touchStartY = 0;
     
-    this.boardEl.addEventListener('touchstart', (e) => {
+    document.addEventListener('touchstart', (e) => {
+      if (!this.gameViewEl.classList.contains('active')) return;
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('label')) return;
       touchStartX = e.changedTouches[0].screenX;
       touchStartY = e.changedTouches[0].screenY;
     }, {passive: false});
 
-    this.boardEl.addEventListener('touchmove', (e) => {
+    document.addEventListener('touchmove', (e) => {
+      if (!this.gameViewEl.classList.contains('active')) return;
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('label')) return;
       e.preventDefault(); // Prevent page scrolling while swiping
     }, {passive: false});
 
-    this.boardEl.addEventListener('touchend', (e) => {
+    document.addEventListener('touchend', (e) => {
+      if (!this.gameViewEl.classList.contains('active')) return;
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('label')) return;
       if (this.isCompleted) return;
+      
       const touchEndX = e.changedTouches[0].screenX;
       const touchEndY = e.changedTouches[0].screenY;
       const dx = touchEndX - touchStartX;
@@ -390,6 +425,7 @@ class Game {
     }
 
     this.levelIndex = idx;
+    this.selectedLevelIndex = idx;
     
     if (!forceFresh && this.levelStates[idx]) {
       // Restore saved state
@@ -665,6 +701,8 @@ class Game {
 
   render() {
     this.boardEl.innerHTML = '';
+    
+    if (!this.grid || this.grid.length === 0) return;
     
     // Render static background grid cells
     for (let r = 0; r < 13; r++) {
