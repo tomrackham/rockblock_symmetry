@@ -31,7 +31,20 @@
             <!-- Sidebar Controls Content -->
             <aside class="sidebar glass-panel">
                 <div class="instructions-brief" style="font-size: 0.8rem; color: #ccd; line-height: 1.4; margin-bottom: 0;">
-                    <p style="margin-bottom: 12px;">Push all the rocks until they convert to walls.</p>
+                    <p style="margin-bottom: 12px;">Push all the rocks to advance their colours until they convert to walls.</p>
+                    <div class="rock-progression" style="margin-bottom: 12px;">
+                        <span class="chip rock-purple" title="Purple (Needs 5 Pushes)">Purple</span>
+                        <span class="arrow">→</span>
+                        <span class="chip rock-blue" title="Blue (Needs 4 Pushes)">Blue</span>
+                        <span class="arrow">→</span>
+                        <span class="chip rock-green" title="Green (Needs 3 Pushes)">Green</span>
+                        <span class="arrow">→</span>
+                        <span class="chip rock-yellow" title="Yellow (Needs 2 Pushes)">Yellow</span>
+                        <span class="arrow">→</span>
+                        <span class="chip rock-red" title="Red (Needs 1 Push)">Red</span>
+                        <span class="arrow">→</span>
+                        <span class="chip wall-cell" title="Symmetric Solid Wall">Wall</span>
+                    </div>
                     <p>The final pattern of walls must be symmetric across all four axes.</p>
                 </div>
 
@@ -47,21 +60,7 @@
 
                 <!-- How to Play Section -->
                 <div class="instructions-section">
-                    <h3>How To Play</h3>
-                    <div class="step-desc" style="font-size: 0.85rem; color: #fff; margin-bottom: 12px;">Push rocks to advance colour towards solid wall:</div>
-                    <div class="rock-progression">
-                        <span class="chip rock-purple" title="Purple (Needs 5 Pushes)">Purple</span>
-                        <span class="arrow">→</span>
-                        <span class="chip rock-blue" title="Blue (Needs 4 Pushes)">Blue</span>
-                        <span class="arrow">→</span>
-                        <span class="chip rock-green" title="Green (Needs 3 Pushes)">Green</span>
-                        <span class="arrow">→</span>
-                        <span class="chip rock-yellow" title="Yellow (Needs 2 Pushes)">Yellow</span>
-                        <span class="arrow">→</span>
-                        <span class="chip rock-red" title="Red (Needs 1 Push)">Red</span>
-                        <span class="arrow">→</span>
-                        <span class="chip wall-cell" title="Symmetric Solid Wall">Wall</span>
-                    </div>
+                    <h3>Controls</h3>
                     <div class="controls-guide" style="align-items: center; margin-top: 16px; gap: 8px;">
                         <div class="keys">
                             <kbd>▲</kbd><kbd>▼</kbd><kbd>◄</kbd><kbd>►</kbd> Arrow Keys or Swipe to Move
@@ -75,7 +74,7 @@
                     </div>
                 </div>
 
-                <div class="credit" style="font-size: 0.75rem; color: var(--text-muted); text-align: center; padding-top: 8px; padding-bottom: 20px; line-height: 1.4;">
+                <div class="credit" style="font-size: 0.75rem; color: var(--text-muted); text-align: center; padding-top: 8px; padding-bottom: 0px; line-height: 1.4;">
                     By Tom Rackham, April 2000<br>
                     Updated to HTML5, June 2026
                 </div>
